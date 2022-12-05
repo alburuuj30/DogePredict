@@ -44,7 +44,19 @@ Pada proyek ini menggunakan dataset yang diambil dari Kaggle dengan Judul *Crypt
   * Pada dataset ini mengambil file data coin_Dogecoin.csv
   * Tidak ada missing values atau nilai yang kosong pada tiap kolom
   * Data terdiri atas 1 kolom bertipe data integer, 3 kolom bertipe data string, dan 6 kolom bertipe data float.
-  * Data berisi 2.760 sample dan 10 kolom.
+  * Data berisi 2.760 sample.
+  * Data berisi 10 kolom yag terdiri dari kolom *SNo, Name, Symbol, Date, High, Low, Open, Close, Volume, Marketcap*.
+
+Variable yang terdapat pada data :
+* Name : Nama uang kripto
+* Symbol : Simbol dari mata uang kripto
+* Date : Tanggal pencataan data darti setiap mata uang
+* High : Nilai harga tertinggi uang kripto dari hari tertentu
+* Low : Nilai harga terendah uang kripto dari hari tertentu
+* Open : Nilai harga buka uang kripto dari hari tertentu
+* Close : Nilai harga tutup uang kripto dari hari tertentu
+* Volume : Besaran transaksi di hari tertentu
+* Marketcap : Kapitalisai pasar
 
 ### Exploratory Data Analytics
 Melakukan eksplorasi data dari dataset, sehingga kita dapat mengetahui bagaimana keadaan dataset yang akan kita gunakan.
@@ -60,7 +72,7 @@ Berfokus pada satu variable dengan tujuan dapat diidentifikasi dan diketahui kar
 
 * Multivariate Analysis
 
-Jika pada aspek sebelumnya kita hanya berfokus pada satu kolom saja, pada aspek ini kita akan berfokus dengan cara membandingkan dan juga mencari korelasi dari beberapa kolom dengan kolom yang menjadi acuan dasar yang sudan kita tentukan yaitu kolom Close.
+Jika pada aspek sebelumnya hanya berfokus pada satu kolom saja, pada aspek ini lebih akan berfokus dengan cara membandingkan dan juga mencari korelasi dari beberapa kolom dengan kolom yang menjadi acuan dasar yang sudan kita tentukan yaitu kolom Close.
 ![multivariate](https://user-images.githubusercontent.com/75149615/205506179-2013a388-d59d-459a-9904-a54d70c4f85f.png)
 
 Visualiasi dibawah ini menunjukkan beberapa hasil nilai korelasi pada tiap kolom. dihasilkan bahwa kolom *Volume* memiliki niali korelasi yang rendah dibanding kolom yang lain terhadap kolom yang sudah kita jadikan sebagai acuan, yaitu kolom *Close*. dengan demikian kita dapat melakukan drop pada kolom *Volume*
@@ -70,7 +82,10 @@ Visualiasi dibawah ini menunjukkan beberapa hasil nilai korelasi pada tiap kolom
 
 # Data Preparation
 ---
-Untuk mempermudah pelatihan pada model sehingga bisa didapatkan hasil yang baik. selanjutnya kita akan melakukan langkah - langkah sebagai berikut.
+Untuk mempermudah pelatihan pada model sehingga bisa didapatkan hasil yang baik. Selanjutnya dapat melakukan langkah - langkah sebagai berikut.
+* Mengatasi Outlier
+Untuk mengatasi outlier, dapat ditangani dengan menggunakan sebuah method yang bernama IQR method, yaitu dengan cara menghapus data yang berada dikuar IQR sebesar 25% sampai dengan 75% 
+
 * Menghapus kolom yang tidak digunakan
 Penghapusan ini diperlukan karena agar tidak menganggu proses permodelan saat dilakukan training. Menghapus kolom *Sno, Name, Symbol, Date, Marketcap* sehingga menjadi 
 
@@ -83,14 +98,14 @@ Penghapusan ini diperlukan karena agar tidak menganggu proses permodelan saat di
 | 0.001143 | 0.000662 | 0.001143 | 0.000704 |
 
 * Split Dataset
-Membagi dataset menjadi 2 bagian
+Membagi dataset menjadi 2 bagian, sebagai test data dan train data. Untuk pembagiannya masing - masing memiliki porsi senilai 80% untuk *train* data dan 20% sebagai *test* data
 * Data Normalization
-Dalam proses ini, diperlukan transformasi data atau dengan kata lain mengubah data asli menjadi format data yang lebih efisien. Hal ini dilakukan untuk menghilangkan redundasi data.
+Dalam proses ini, diperlukan transformasi data atau dengan kata lain mengubah data asli menjadi format data yang lebih efisien. Hal ini dilakukan untuk menghilangkan redundasi data. Untuk menormalisasikan data, dapat menggunakan library *MinMaxScaller*. *Library* in akan mengubah fitur dengan cara menskalakan setiap fitur ke rentang terentu. *range default* yang digunakan pada *Library* ini yaitu antara 0 sampai 1.
 
 # Modeling
 Model atau Algoritma yang digunakan pada proyek ini.
 ## K-Nearest Neighbours
-Algoritma KNN merupakan algoritma klasifikasi yang bekerja dengan mengambil sejumlah K data terdekat (tetangganya) sebagai acuan untuk menentukan kelas dari data baru. Algoritma ini mengklasifikasikan data berdasarkan kesamaan atau kemiripan atau kedekatannya terhadap data ainnya. 
+Algoritma KNN merupakan algoritma klasifikasi yang bekerja dengan mengambil sejumlah K data terdekat (tetangganya) sebagai acuan untuk menentukan kelas dari data baru. Algoritma ini mengklasifikasikan data berdasarkan kesamaan atau kemiripan atau kedekatannya terhadap data lainnya. Algoritma KNN digunakan untuk klasifikasi dan regresi. Pada pembuatan model ini akan menggunaka modul KNN yang terlah di sediakan oleh *library scikit-learn*.  
 Cara kerja Algoritma KNN secara umum :
 * Tentukan jumlah tetangga (K) yang akan digunakan untuk pertimbangan penentuan kelas.
 * Hitung jarak dari data baru ke masing-masing data point pada dataset.
@@ -127,9 +142,10 @@ Dimana :
 
 Setelah melakukan evaluasi menggunakan metrik mean squared error pada model dengan menggunakan data uji didapatkan hasil sebagai berikut:
 
-![image](https://user-images.githubusercontent.com/75149615/205510296-c3cd5509-b6bd-4b45-bb48-b908022fa8b7.png)
+![image](https://user-images.githubusercontent.com/75149615/205545524-2f5ea65f-f82c-4b85-9a74-b01181a55315.png)
 
 Diantara 3 model yang telah dijalankan, dapat disimpulkan bahwa KNN dan RandomForest yang memiliki hasil yang optimal. Demikian, hasil ini dapat digunakan untuk membantu para trader bertransaksi di dalam dunia kripto.
+
 ---
 # Refences
 ---
